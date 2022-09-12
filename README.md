@@ -43,10 +43,12 @@ Move desired raspbian base disk image to file `raspbian.img`
 Where action is one of the following
 
 `all` - Does the same as the next four commands in order\
+`docker` - remasters the raspbian image and generates custom_root.tar and exits\
 `extract` - Extracts files from raspbian.img to run in docker\
 `build` - Builds docker image from extracted files and custom additions\
 `compose` - Creates custom.img from built docker image\
-`flash` - Flashes custom.img onto memory device (default: /dev/mmcblk0)
+`flash` - Flashes custom.img onto memory device (default: /dev/mmcblk0)\
+`export` - Exports the custom root fs from docker.
 
 Use Dockerfile to build the pi's root as if it were a docker image.  Example
 simply changes pi's password to that specified by --passwd instead of the
