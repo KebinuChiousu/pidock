@@ -15,7 +15,7 @@ latest version of an upstream base image
 To run commands as pi root during image build, the host machine must be
 set up with binfmt_misc to run qemu for arm binaries
 
-On ubuntu 20: `apt install qemu-user-static`
+On ubuntu 22.04: `apt install qemu-user-static`
 
 This package doesn't install binfmt_misc properly prior to ubuntu 20.  Run
 `./binfmt_setup.sh` if you're running an older version of ubuntu or debian.
