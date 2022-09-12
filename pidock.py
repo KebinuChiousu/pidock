@@ -30,6 +30,7 @@ scripts = {
     'build': 'support/2-build.sh',
     'compose': 'support/3-compose.sh',
     'flash': 'support/4-flash.sh',
+    'export': 'support/99-export.sh'
 }
 
 def run_script(script, args=[]):
@@ -71,11 +72,20 @@ def main(args):
         ('flash', lambda: run_script('flash', [device])),
     ]
 
+    docker_actions = [
+        ('extract', lambda: run_script('extract', [img])),
+        ('build', lambda: run_script('build', [passwd])),
+        ('export', lambda: run_script('export', [host]))
+    ]
+
     actions = None
-    if args.action == 'all':
-        actions = all_actions
+    if args.action == 'docker':
+        actions = docker_actions
     else:
-        actions = [a for a in all_actions if a[0] == args.action]
+        if args.action == 'all':
+            actions = all_actions
+        else:
+            actions = [a for a in all_actions if a[0] == args.action]
 
     for action in actions:
         print('Doing {}'.format(action[0]))
@@ -87,7 +97,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument(
         'action',
-        choices=['all', 'extract', 'build', 'compose', 'flash']
+        choices=['all', 'docker', 'extract', 'build', 'compose', 'flash', 'export']
     )
     parser.add_argument('--host', type=str)
     parser.add_argument('--dev', type=str)
