@@ -16,6 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import os
 import sys
 import argparse
 import subprocess
@@ -26,6 +27,7 @@ _default_passwd='raspberry'
 _default_img='raspbian.img'
 
 scripts = {
+    'prereq': 'support/0-prereq.sh',
     'extract': 'support/1-extract.sh',
     'build': 'support/2-build.sh',
     'compose': 'support/3-compose.sh',
@@ -86,6 +88,10 @@ def main(args):
             actions = all_actions
         else:
             actions = [a for a in all_actions if a[0] == args.action]
+
+    if not os.path.isdir('deb'):
+        print('Downloading required debian packages')
+        run_script('prereq')
 
     for action in actions:
         print('Doing {}'.format(action[0]))
